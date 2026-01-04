@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { DeviceProvider } from './context/DeviceContext';
-import { GOOGLE_OAUTH_CLIENT_ID } from './config/constants';
 
 import Sidebar from './components/Sidebar';
 import LoginPage from './pages/LoginPage';
@@ -13,6 +11,7 @@ import MonitoringPage from './pages/MonitoringPage';
 import AutomationPage from './pages/AutomationPage';
 import SettingsPage from './pages/SettingsPage';
 import UsersPage from './pages/UsersPage';
+import SerialConfigPage from './pages/SerialConfigPage';
 
 import './index.css';
 
@@ -104,6 +103,12 @@ const AppRoutes = () => {
           <MainLayout><UsersPage /></MainLayout>
         </ProtectedRoute>
       } />
+      
+      <Route path="/serial" element={
+        <ProtectedRoute>
+          <MainLayout><SerialConfigPage /></MainLayout>
+        </ProtectedRoute>
+      } />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
@@ -113,15 +118,13 @@ const AppRoutes = () => {
 // Main App Component
 function App() {
   return (
-    <GoogleOAuthProvider clientId={GOOGLE_OAUTH_CLIENT_ID}>
-      <AuthProvider>
-        <DeviceProvider>
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
-        </DeviceProvider>
-      </AuthProvider>
-    </GoogleOAuthProvider>
+    <AuthProvider>
+      <DeviceProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </DeviceProvider>
+    </AuthProvider>
   );
 }
 

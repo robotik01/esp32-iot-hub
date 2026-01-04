@@ -10,7 +10,8 @@ import {
   Menu,
   X,
   Wifi,
-  WifiOff
+  WifiOff,
+  Usb
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
@@ -34,10 +35,11 @@ const Sidebar = () => {
 
   const technicianMenuItems = [
     ...userMenuItems,
+    { path: '/serial', icon: Usb, label: 'Serial Config' },
     { path: '/users', icon: Users, label: 'User Management' },
   ];
 
-  const menuItems = isTechnician ? technicianMenuItems : userMenuItems;
+  const menuItems = isTechnician() ? technicianMenuItems : userMenuItems;
 
   const isActive = (path) => location.pathname === path;
 
